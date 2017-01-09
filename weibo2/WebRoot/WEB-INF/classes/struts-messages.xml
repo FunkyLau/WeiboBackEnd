@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="messages" namespace="/" extends="json-default" >
+		<action name="MessagesAction_*" class="messagesAction" method="{1}">
+			<result name="query" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">pagination\.total,pagination\.from,pagination\.size,pagination\.rows\[\d+\]\.messagesId,pagination\.rows\[\d+\]\.messagesType,pagination\.rows\[\d+\]\.messagesLabel,pagination\.rows\[\d+\]\.messagesInfo,pagination\.rows\[\d+\]\.messagesTime,pagination\.rows\[\d+\]\.messagesReadnum,pagination\.rows\[\d+\]\.messagesAgreenum,pagination\.rows\[\d+\]\.messagesCollectnum,pagination\.rows\[\d+\]\.messagesCommentnum,pagination\.rows\[\d+\]\.messagesTranspondnum,pagination\.rows\[\d+\]\.users\.usersId</param>
+			</result>
+			<result name="queryall" type="json">
+				<param name="root">list</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="saveMessages" type="json">
+				<param name="root">flag</param>
+			</result> 
+			<result name="saveorupdate" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="queryNewMessages" type="json">
+				<param name="root">messagesNum</param>
+			</result>
+			<result name="iosQueryMessages" type="json">
+				<param name="root">result</param>
+				<!--
+				<param name="includeProperties">showMessages\.nowpage,showMessages\.total,showMessages\.messages\[\d+\]\.messagesId,showMessages\.messages\[\d+\]\.messagesAgreenum,showMessages\.messages\[\d+\]\.atuserses\.usersNikename,showMessages\.messages\[\d+\]\.collectionses,showMessages\.messages\[\d+\]\.messagesCollectnum,showMessages\.messages\[\d+\]\.messagesCommentnum,showMessages\.messages\[\d+\]\.commentses,showMessages\.messages\[\d+\]\.messagesInfo,showMessages\.messages\[\d+\]\.messagesLabel,showMessages\.messages\[\d+\]\.pictureses,showMessages\.messages\[\d+\]\.messagesReadnum,showMessages\.messages\[\d+\]\.messagesTime,showMessages\.messages\[\d+\]\.messagesTranspondnum,showMessages\.messages\[\d+\]\.messagesType,showMessages\.messages\[\d+\]\.users\.usersNikename,showMessages\.messages\[\d+\]\.users\.userinfos\[\d+\]\.userinfoSex,showMessages\.headphotos\[\d+\]\.picturesUrl,showMessages\.headphotos\[\d+\]\.users\.usersNikename,showMessages\.agreeMessages\[\d+\]\.messages\.messagesId,showMessages\.attentionsNum,showMessages\.fansNum,showMessages\.myMessagesNum,showMessages\.lastMessages,showMessages\.nowtime</param>				
+				-->
+			</result>
+			<result name="iosSaveMessages" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="queryMessages" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">showMessages\.nowpage,showMessages\.total,showMessages\.messages\[\d+\]\.messagesId,showMessages\.messages\[\d+\]\.messagesAgreenum,showMessages\.messages\[\d+\]\.atuserses\.usersNikename,showMessages\.messages\[\d+\]\.collectionses,showMessages\.messages\[\d+\]\.messagesCollectnum,showMessages\.messages\[\d+\]\.messagesCommentnum,showMessages\.messages\[\d+\]\.commentses,showMessages\.messages\[\d+\]\.messagesInfo,showMessages\.messages\[\d+\]\.messagesLabel,showMessages\.messages\[\d+\]\.pictureses,showMessages\.messages\[\d+\]\.messagesReadnum,showMessages\.messages\[\d+\]\.messagesTime,showMessages\.messages\[\d+\]\.messagesTranspondnum,showMessages\.messages\[\d+\]\.messagesType,showMessages\.messages\[\d+\]\.users\.usersNikename,showMessages\.messages\[\d+\]\.users\.userinfos\[\d+\]\.userinfoSex,showMessages\.headphotos\[\d+\]\.picturesUrl,showMessages\.headphotos\[\d+\]\.users\.usersNikename,showMessages\.agreeMessages\[\d+\]\.messages\.messagesId,showMessages\.attentionsNum,showMessages\.fansNum,showMessages\.myMessagesNum,showMessages\.lastMessages,showMessages\.nowtime</param>
+			</result>
+			<result name="queryComments" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">showComments\.nowpage,showComments\.total,showComments\.comments\[\d+\]\.commentsId,showComments\.comments\[\d+\]\.commentsInfo,showComments\.comments\[\d+\]\.commentsInfostatus,showComments\.comments\[\d+\]\.commentsTime,showComments\.comments\[\d+\]\.users\.usersNikename,showComments\.comments\[\d+\]\.users\.userinfos\[\d+\]\.userinfoSex,showComments\.headphotos\[\d+\]\.picturesUrl,showComments\.headphotos\[\d+\]\.users\.usersNikename,showComments\.nowtime</param>
+			</result>
+			<result name="myselfmessages">/frontstage/user_info.jsp</result>
+		</action>
+	</package>
+</struts>

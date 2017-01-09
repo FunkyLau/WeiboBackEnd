@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd"
+	default-lazy-init="false">
+
+
+	<!-- BaseDao -->
+	<bean id="baseDaoImpl" class="com.dao.impl.BaseDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- AdminDao -->
+	<bean id="adminsDaoImpl" class="com.dao.impl.AdminsDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- AtusersDao -->
+	<bean id="atusersDaoImpl" class="com.dao.impl.AtusersDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- CollectionsDao -->
+	<bean id="collectionsDaoImpl" class="com.dao.impl.CollectionsDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- CommentsDao -->
+	<bean id="commentsDaoImpl" class="com.dao.impl.CommentsDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- MessagesDao -->
+	<bean id="messagesDaoImpl" class="com.dao.impl.MessagesDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- PicturesDao -->
+	<bean id="picturesDaoImpl" class="com.dao.impl.PicturesDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- PrivateletterDao -->
+	<bean id="privateletterDaoImpl" class="com.dao.impl.PrivateletterDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- RelationDao -->
+	<bean id="relationDaoImpl" class="com.dao.impl.RelationDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- UserinfoDao -->
+	<bean id="userinfoDaoImpl" class="com.dao.impl.UserinfoDaoImpl"
+		parent="hibernateDaoSupport" />
+
+	<!-- UsersDao -->
+	<bean id="usersDaoImpl" class="com.dao.impl.UsersDaoImpl"
+		parent="hibernateDaoSupport" />
+
+
+</beans>

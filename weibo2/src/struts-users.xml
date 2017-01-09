@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<package name="users" namespace="/" extends="json-default">
+		<action name="UsersAction_*" class="usersAction" method="{1}">
+			<result name="query" type="json">
+				<param name="ignoreHierarchy">false</param>
+				<param name="includeProperties">pagination\.total,pagination\.rows\[\d+\]\.usersId,pagination\.rows\[\d+\]\.usersEmail,pagination\.rows\[\d+\]\.usersPassword,pagination\.rows\[\d+\]\.usersNikename,pagination\.rows\[\d+\]\.usersTime,pagination\.rows\[\d+\]\.usersStatus</param>
+			</result>
+			<result name="delete" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="check" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="saveorupdate" type="json">
+				<param name="root">flag</param>
+			</result>
+			<result name="iosLogin" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="iosSaveRegister" type="json">
+				<param name="root">result</param>
+			</result>
+			
+			<result name="iosFail" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="iosSearchUsers" type="json">
+				<param name="root">result</param>
+			</result>
+			<result name="login" type="redirect">/index.jsp</result>
+			<result name="faile">/frontstage/register.jsp</result>
+			<result name="out">/frontstage/login.jsp</result>
+			
+			<result name="searchUsers">/frontstage/attention.jsp</result>
+			<result name="searchAttention">/frontstage/attention.jsp</result>
+			<result name="addRelation">/frontstage/attention.jsp</result>
+			<result name="cancelRelation">/frontstage/attention.jsp</result>
+			<result name="updateNote">/frontstage/attention.jsp</result>
+			<result name="removeFans">/frontstage/attention.jsp</result>
+			<result name="logout">/frontstage/login.jsp</result>
+		</action>
+	</package>
+	
+</struts>

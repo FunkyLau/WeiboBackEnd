@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project adv-config="true">
+  <container path="com.genuitec.runtime.library/com.genuitec.struts_2.1">
+    <disable type="core"/>
+    <disable type="facets"/>
+  </container>
+</project>

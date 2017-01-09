@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- BaseAction -->       
+    <bean name="baseAction" class="com.action.BaseAction" scope="prototype" >
+    	<property name="baseService" ref="baseServiceImpl"/>
+    </bean>
+           
+    <!-- AdminsAction -->
+	<bean name="adminsAction" class="com.action.AdminsAction" scope="prototype" parent="baseAction">
+		<property name="adminsService" ref="adminsServiceImpl"/>
+	</bean>
+	
+	<!-- AtusersAction -->
+	<bean name="atusersAction" class="com.action.AtusersAction" scope="prototype" parent="baseAction">
+		<property name="atusersService" ref="atusersServiceImpl"/>
+	</bean>
+	
+	<!-- CollectionsAction -->
+	<bean name="collectionsAction" class="com.action.CollectionsAction" scope="prototype" parent="baseAction">
+		<property name="collectionsService" ref="collectionsServiceImpl"/>
+	</bean>
+	
+	<!-- CommentsAction -->
+	<bean name="commentsAction" class="com.action.CommentsAction" scope="prototype" parent="baseAction">
+		<property name="commentsService" ref="commentsServiceImpl"/>
+	</bean>
+	
+	<!-- PicturesAction -->
+	<bean name="picturesAction" class="com.action.PicturesAction" scope="prototype" parent="baseAction">
+		<property name="picturesService" ref="picturesServiceImpl"></property>
+	</bean>
+	
+	<!-- MessagesAction -->
+	<bean name="messagesAction" class="com.action.MessagesAction" scope="prototype" parent="baseAction">
+		<property name="messagesService" ref="messagesServiceImpl"></property>
+	</bean>
+	
+	<!-- PrivateletterAction -->
+	<bean name="privateletterAction" class="com.action.PrivateletterAction" scope="prototype" parent="baseAction">
+		<property name="privateletterService" ref="privateletterServiceImpl"/>
+	</bean>
+	
+	<!-- RelationAction -->
+	<bean name="relationAction" class="com.action.RelationAction" scope="prototype" parent="baseAction">
+		<property name="relationService" ref="relationServiceImpl"/>
+	</bean>
+	
+	<!-- UserinfoAction -->
+	<bean name="userinfoAction" class="com.action.UserinfoAction" scope="prototype" parent="baseAction">
+		<property name="userinfoService" ref="userinfoServiceImpl"/>
+	</bean>
+	
+	<!-- UsersAction -->
+	<bean name="usersAction" class="com.action.UsersAction" scope="prototype" parent="baseAction">
+		<property name="usersService" ref="usersServiceImpl"/>
+	</bean>
+</beans>

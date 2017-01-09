@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<include file="struts-constant.xml"></include>
+	<include file="struts-admins.xml"></include>
+	<include file="struts-atusers.xml"></include>
+	<include file="struts-collections.xml"></include>
+	<include file="struts-comments.xml"></include>
+	<include file="struts-pictures.xml"></include>
+	<include file="struts-privateletter.xml"></include>
+	<include file="struts-relation.xml"></include>
+	<include file="struts-userinfo.xml"></include>
+	<include file="struts-users.xml"></include>
+	<include file="struts-messages.xml"></include>
+	<include file="struts-imagecheck.xml"></include>
+</struts>   
