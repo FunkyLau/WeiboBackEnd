@@ -230,6 +230,7 @@ public class UsersAction extends BaseAction {
 			return "out";
 		}
 	}
+	
 	public String iosSaveRegister(){
 		HttpServletRequest request = ServletActionContext.getRequest();
 		if (request == null) {
@@ -244,7 +245,7 @@ public class UsersAction extends BaseAction {
 			if(!checkimg.equals(randimg)){
 				//验证码错误
 				result = new ObjectResult("100","验证码错误",users);
-				return "faile";
+				return "iosFail";
 			}
 			Users entity = new Users();
 			entity.setUsersEmail(email);
@@ -271,6 +272,7 @@ public class UsersAction extends BaseAction {
 		
 		return "iosSaveRegister";
 	}
+	
 	public String saveregister() {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		String email = request.getParameter("email");

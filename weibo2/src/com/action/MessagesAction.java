@@ -200,7 +200,7 @@ public class MessagesAction extends BaseAction {
 			messages.setMessagesCommentnum(0);
 			messages.setMessagesReadnum(0);
 			messages.setMessagesTranspondnum(0);
-			messages.setMessagesLabel("原创");
+			//messages.setMessagesLabel("原创");
 			if (messages.getMessagesTime() == null) {
 				messages.setMessagesTime(new Timestamp(new Date().getTime()));
 			}

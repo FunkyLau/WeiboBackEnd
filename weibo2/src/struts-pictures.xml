@@ -24,10 +24,12 @@
 			<result name="uploadfail" type="json">
 				<param name="root">finalPath</param>
 			</result>
+			<result name="iosUploadWeiboPic" type="json">
+				<param name="root">result</param>
+			</result>
 			<result name="iosUploadHeadPic" type="json">
 				<param name="root">result</param>
 			</result>
-			
 			<result name="iosUploadFail" type="json">
 				<param name="root">result</param>
 			</result>

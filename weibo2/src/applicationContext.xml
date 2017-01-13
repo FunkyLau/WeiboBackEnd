@@ -57,12 +57,16 @@
 			</props>
 		</property>
 	</bean>
+	
+	<!-- 设置上传文件的最大尺寸为10MB -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<!-- 设置上传文件的最大尺寸为10MB -->
+		
 		<property name="maxUploadSize">
 			<value>10485760</value>
 		</property>
 	</bean>
+	
+	
 	<import resource="spring-dao.xml" />
 	<import resource="spring-service.xml" />
 	<import resource="spring-action.xml" />

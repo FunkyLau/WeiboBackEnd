@@ -3,17 +3,23 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.dispatcher.multipart.MultiPartRequest;
 import org.apache.struts2.dispatcher.multipart.MultiPartRequestWrapper;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -28,6 +34,8 @@ import com.utils.OperateImage;
 import com.utils.Pagination;
 public class PicturesAction extends BaseAction{
 	private static final long serialVersionUID = 1L;
+	//private static final String ServerURL = "http://le1ul1u.com/";
+	private static final String ServerURL = "http://10.1.1.123/";
 	private Pictures pictures;
 	private Messages messages;
 	private Users users;
@@ -279,27 +287,84 @@ public class PicturesAction extends BaseAction{
 		}
 		return "uploadfail";
 	}
-	//要改！
-	public String iosUploadHeadPic() {
+	//微博图片接口
+	public String iosUploadWeiboPic() {
 		HttpServletRequest request = ServletActionContext.getRequest();
-		   CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());    
-	       if (multipartResolver.isMultipart(request)) {    
-	           System.out.println("ss");  
-	       }  
-	       //MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;  
-	       MultipartHttpServletRequest multipartRequest = multipartResolver.resolveMultipart(request);
-		//MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-		MultipartFile mFile = multipartRequest.getFile("file");
-		
-		//
 		String messageId = request.getParameter("messageId");
+		String fileName = request.getParameter("imageName");
+		//MultiPartRequest mRequest = (MultiPartRequest)request;
+		//MultiPartRequestWrapper req = (MultiPartRequestWrapper) request;
+		
+		MultiPartRequestWrapper multiWrapper = (MultiPartRequestWrapper) request; 
+		File[] files = multiWrapper.getFiles("uploadHeadPics");  
+		if(files == null){
+			result = new ObjectResult("100", "获取不到上传的文件", null);
+			return "iosUploadFail";
+		}
 		Messages message = (Messages)baseService.getObjectById(Messages.class, Integer.parseInt(messageId));
 		String userId = message.getUsers().getUsersId().toString();
 		Users user = (Users) baseService.getObjectById(Users.class,Integer.parseInt(userId));
-		
 		System.out.println("start uploading");
 		String uplPath = "";
-		uplPath = "/" + userId;
+		uplPath = "/" + fileName;
+		// 设置上传的路径
+		String path = ServletActionContext.getServletContext().getRealPath("/uploadWeiboPics");
+		// 上传路径的文件
+		File pfile = new File(path);
+		// 文件的路径创建
+		if (!pfile.exists()) {
+			pfile.mkdirs();
+		}
+		try {
+			File uploadImage = files[0];
+			String realPath = ServerURL + "" + uplPath;
+			System.out.println(realPath);
+			FileUtils.copyFile(uploadImage, new File(pfile, uplPath));
+			System.out.println("uploadsucceed" + uplPath);
+			Pictures weiboPic = new Pictures();
+			Timestamp uploadTime = new Timestamp(System.currentTimeMillis());
+			weiboPic.setPicturesTime(uploadTime);
+			weiboPic.setPicturesUrl(realPath);
+			weiboPic.setUsers(user);
+			weiboPic.setPicturesType("微博");
+			weiboPic.setMessages(message);
+			//headPic.setPicturesTime(System.currentTimeMillis());
+			
+			//判断message中是否已经有了图片数组
+			Set<Pictures> picSet = message.getPictureses();
+			if (picSet == null) {
+				picSet = new HashSet<Pictures>();
+			}
+			picSet.add(weiboPic);
+			message.setPictureses(picSet);
+			message.setMessagesLabel(path);
+			//baseService.saveOrUpdateObject(user);
+			baseService.saveObject(weiboPic);
+			baseService.saveOrUpdateObject(message);
+			result = new ObjectResult("0", "success", null);
+			return "iosUploadWeiboPic";
+		} catch (IOException e) {
+			result = new ObjectResult("100", "false", null);
+			e.printStackTrace();
+		}
+		return "iosUploadFail";
+	}
+	
+	//上传用户头像
+	public String iosUploadHeadPic() {
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String userId = request.getParameter("userId");
+		String fileName = request.getParameter("imageName");
+		MultiPartRequestWrapper multiWrapper = (MultiPartRequestWrapper) request; 
+		File[] files = multiWrapper.getFiles("uploadHeadPics");  
+		if(files == null){
+			result = new ObjectResult("100", "获取不到上传的文件", null);
+			return "iosUploadFail";
+		}
+		Users user = (Users) baseService.getObjectById(Users.class,Integer.parseInt(userId));
+		System.out.println("start uploading");
+		String uplPath = "";
+		uplPath = "/" + fileName;
 		// 设置上传的路径
 		String path = ServletActionContext.getServletContext().getRealPath("/uploadHeadPics");
 		// 上传路径的文件
@@ -309,30 +374,27 @@ public class PicturesAction extends BaseAction{
 			pfile.mkdirs();
 		}
 		try {
-			if (mFile != null) {
-				File uploadImage = (File) mFile;
-				//String currentTime = System.currentTimeMillis() + "";
-				//nt spilIndex = uploadFileName.lastIndexOf(".");
-				//String extName = uploadFileName.substring(spilIndex);
-				FileUtils.copyFile(uploadImage, new File(pfile, uplPath));
-				//finalPath = uplPath;
-				System.out.println("uploadsucceed" + uplPath);
-				Set<Pictures> picSet = new HashSet<Pictures>(); 
-				Pictures headPic = new Pictures();
-				Timestamp uploadTime = new Timestamp(System.currentTimeMillis());
-				headPic.setPicturesTime(uploadTime);
-				headPic.setPicturesUrl(uplPath);
-				//headPic.setPicturesTime(System.currentTimeMillis());
-				picSet.add(headPic);
-				user.setPictureses(picSet);
-				baseService.saveOrUpdateObject(user);
-				baseService.saveOrUpdateObject(headPic);
-				result = new ObjectResult("0", "success", null);
-				return "iosUploadHeadPic";
-			}else{
-				result = new ObjectResult("100", "false", null);
-				
+			File uploadImage = files[0];
+			
+			FileUtils.copyFile(uploadImage, new File(pfile, uplPath));
+			System.out.println("uploadsucceed" + uplPath);
+			Pictures headPic = new Pictures();
+			Timestamp uploadTime = new Timestamp(System.currentTimeMillis());
+			headPic.setPicturesTime(uploadTime);
+			headPic.setPicturesUrl(ServerURL + "" + uplPath);
+			headPic.setUsers(user);
+			headPic.setPicturesType("头像");
+			//判断message中是否已经有了图片数组
+			Set<Pictures> picSet = user.getPictureses();
+			if (picSet == null) {
+				picSet = new HashSet<Pictures>();
 			}
+			picSet.add(headPic);
+			user.setPictureses(picSet);
+			baseService.saveOrUpdateObject(user);
+			baseService.saveObject(headPic);
+			result = new ObjectResult("0", "success", null);
+			return "iosUploadHeadPic";
 		} catch (IOException e) {
 			result = new ObjectResult("100", "false", null);
 			e.printStackTrace();
