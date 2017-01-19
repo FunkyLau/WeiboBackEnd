@@ -230,47 +230,47 @@ public class UsersAction extends BaseAction {
 			return "out";
 		}
 	}
-	
+	//ios注册
 	public String iosSaveRegister(){
 		HttpServletRequest request = ServletActionContext.getRequest();
 		if (request == null) {
 			result = new ObjectResult("100","注册失败",null);
 			return "iosFail";
+		}
+		String email = request.getParameter("telnum");
+		String passWord = request.getParameter("password");
+		String nikeName = request.getParameter("nickname");
+		String checkimg = request.getParameter("code");
+		String randimg = (String) ActionContext.getContext().getSession().get("randimg");
+		System.out.println(checkimg + " --- " + randimg );
+		if(!checkimg.equals(randimg)){
+			//验证码错误
+			result = new ObjectResult("100","验证码错误",users);
+			return "iosFail";
+		}
+		Users entity = new Users();
+		entity.setUsersEmail(email);
+		entity.setUsersPassword(passWord);
+		entity.setUsersNikename(nikeName);
+		entity.setUsersStatus(0);
+		entity.setUsersTime(new Timestamp(new Date().getTime()));
+		boolean saveUserSuccess = baseService.saveOrUpdateObject(entity);
+		Users newUsers=(Users) baseService.getObjects(Users.class, "where usersEmail='"+email+"' and usersPassword='"+passWord+"'").get(0);
+		Userinfo newUserinfo=new Userinfo();
+		newUserinfo.setUserinfoSex("男"); //默认
+		newUserinfo.setUserinfoAddress("北京 东城区");  //默认
+		newUserinfo.setUserinfoEmail(newUsers.getUsersEmail());
+		newUserinfo.setUsers(newUsers);
+		baseService.saveOrUpdateObject(newUserinfo);
+		if (saveUserSuccess == false) {
+			result = new ObjectResult("100","注册失败",newUsers);
+			return "iosFail";
 		}else{
-			String email = request.getParameter("telnum");
-			String passWord = request.getParameter("password");
-			String nikeName = request.getParameter("nickname");
-			String checkimg = request.getParameter("code");
-			String randimg = (String) ActionContext.getContext().getSession().get("randimg");
-			if(!checkimg.equals(randimg)){
-				//验证码错误
-				result = new ObjectResult("100","验证码错误",users);
-				return "iosFail";
-			}
-			Users entity = new Users();
-			entity.setUsersEmail(email);
-			entity.setUsersPassword(passWord);
-			entity.setUsersNikename(nikeName);
-			entity.setUsersStatus(0);
-			entity.setUsersTime(new Timestamp(new Date().getTime()));
-			this.flag = baseService.saveOrUpdateObject(entity);
-			Users newUsers=(Users) baseService.getObjects(Users.class, "where usersEmail='"+email+"' and usersPassword='"+passWord+"'").get(0);
-			Userinfo newUserinfo=new Userinfo();
-			newUserinfo.setUserinfoSex("男"); //默认
-			newUserinfo.setUserinfoAddress("北京 东城区");  //默认
-			newUserinfo.setUserinfoEmail(newUsers.getUsersEmail());
-			newUserinfo.setUsers(newUsers);
-			baseService.saveOrUpdateObject(newUserinfo);
-			if (this.flag == false) {
-				result = new ObjectResult("100","注册失败",newUsers);
-				return "iosFail";
-			}else{
-				result = new ObjectResult("0","注册成功",newUsers);
-				
-			}
+			result = new ObjectResult("0","注册成功",newUsers);
+			return "iosSaveRegister";
 		}
 		
-		return "iosSaveRegister";
+		
 	}
 	
 	public String saveregister() {
@@ -307,7 +307,7 @@ public class UsersAction extends BaseAction {
 		}
 		return "out";
 	}
-
+	
 	public String checkCode() {
 		String randimg = (String) ActionContext.getContext().getSession().get("randimg");
 		if (!randimg.equals(code) && randimg != code) {
