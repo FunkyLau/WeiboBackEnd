@@ -242,7 +242,7 @@ public class UsersAction extends BaseAction {
 		String nikeName = request.getParameter("nickname");
 		String checkimg = request.getParameter("code");
 		String randimg = (String) ActionContext.getContext().getSession().get("randimg");
-		System.out.println(checkimg + " --- " + randimg );
+		System.out.println(checkimg + "/" + email + "/" + nikeName);
 		if(!checkimg.equals(randimg)){
 			//验证码错误
 			result = new ObjectResult("100","验证码错误",users);
@@ -269,7 +269,6 @@ public class UsersAction extends BaseAction {
 			result = new ObjectResult("0","注册成功",newUsers);
 			return "iosSaveRegister";
 		}
-		
 		
 	}
 	
